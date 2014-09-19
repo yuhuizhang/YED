@@ -1,0 +1,328 @@
+#+PROPERTY: use_ALL basis interaction matrix signalization
+#+PROPERTY: geometry_ALL general disk torus
+#+PROPERTY: interaction_ALL general Coulomb "Hard core"
+#+PROPERTY: typeInClass_ALL private public protected "not in class"
+
+* basis
+  :PROPERTIES:
+  :use:      basis
+  :interaction: general
+  :END:
+  [[file:basis/basis.h]]    
+** constructor  
+   :PROPERTIES:
+   :geometry: general
+   :typeInClass: public
+   :END:
+   [[file:basis/publicFuncs.cpp]]
+   
+** pBToDeci
+   :PROPERTIES:
+   :geometry: general
+   :typeInClass: private
+   :END:
+   Translate the orbital basis to a decimal number.
+   [[file:basis/tool.cpp]]
+   
+** pBToQN
+   :PROPERTIES:
+   :geometry: general
+   :typeInClass: private
+   :END:
+   Return the quantum number of that orbital basis
+   [[file:basis/tool.cpp]]
+   
+** deciToBi
+   :PROPERTIES:
+   :geometry: general
+   :typeInClass: private
+   :END:
+   Convert a decimal number to binary number(like 5 -> 101)
+   [[file:basis/tool.cpp]]
+   
+** constr
+   Input: n, nOrb
+   Output: all the configurations b[], and their quantum numbers qn[]
+   Algorithm: (need to be proven for its correctness)
+   Initial configuration: all electrons try to occupy the smallest orbitals.
+   Final configuration: all electrons try to occupy the biggest orbitals.
+How to go from initial configuration to the final configuration:
+   If (the biggest orbital occupied by electron != the real biggest orbital)
+      the biggest orbital increases by 1
+   else
+      step1: identify the electron whose orbitals are already their biggest ones (R);
+      step2: except electrons (R), identify the electron (a) with the biggest orbital;
+      step3: increase the orbital of electron (a) by 1;
+      step4: move electron(s) (R) on the right of, and next to electron (a).
+
+   :PROPERTIES:
+   :geometry: general
+   :typeInClass: private
+   :END:
+   [[file:basis/constr.cpp]]
+
+** dGen
+   :PROPERTIES:
+   :geometry: disk
+   :typeInClass: private
+   :END:
+   Generate the specific parameters for torus geometry
+   [[file:basis/tool.cpp]]
+
+** sTBasisJudge
+   :PROPERTIES:
+   :geometry: torus
+   :typeInClass: private
+   :END:
+   Judge if a certain base can be kept for torus geometry or not (single component). In each set, keep the one with the largest correspondent decimal number.
+   [[file:basis/tGen.cpp]]
+   
+** sTBasisJudge
+   :PROPERTIES:
+   :geometry: torus
+   :typeInClass: private
+   :END:
+   Judge if a certain base can be kept for torus geometry or not (two component). In each set, keep the one with the largest correspondent decimal number.
+   [[file:basis/tGen.cpp]]
+
+** tGen
+   :PROPERTIES:
+   :geometry: torus
+   :typeInClass: private
+   :END:
+   Generate the torus kind basis.
+   [[file:basis/tGen.cpp]]
+
+** bGen
+   :PROPERTIES:
+   :geometry: general
+   :typeInClass: public
+   :END:
+   Use different functions to generate bases dependent on the geometry of the problem.
+   [[file:basis/tGen.cpp]]
+
+** print
+   :PROPERTIES:
+   :geometry: general
+   :typeInClass: public
+   :END:
+   Print out the bases in the terminal.
+   [[file:basis/tGen.cpp]]
+   
+* interaction
+  :PROPERTIES:
+  :use:      interaction
+  :END:
+  disk codes have not been tested.
+  [[file:interaction/interaction.h]]    
+** parameters:
+   type[3] = GI; 
+   // G(geometry): (D)disk; (T)torus. I(interaction): C(Coulomb); H(hard core); D(dipolar).
+   param[4] = {a, b, c1, c2};
+   // Don't have to be filled. a, b are the width and length of square lattice; c1 and c2 are the coefficients of 0th, 1st order hard core interaction.
+** constructor
+   :PROPERTIES:
+   :geometry: general
+   :interaction: general
+   :typeInClass: public
+   :END:
+   [[file:interaction/publicFuncs.cpp]]
+   
+** dFCoulomb
+   :PROPERTIES:
+   :geometry: disk
+   :interaction: Coulomb
+   :typeInClass: not in class
+   :END:
+   [[file:interaction/vmIntegrand.cpp]]
+
+** vmIntegrand
+   :PROPERTIES:
+   :geometry: disk
+   :interaction: general
+   :typeInClass: not in class
+   :END:
+   [[file:interaction/vmIntegrand.cpp]]
+
+** vm
+   :PROPERTIES:
+   :geometry: disk
+   :interaction: general
+   :typeInClass: private
+   :END:
+   [[file:interaction/dItr.cpp]]
+
+** cgc
+   :PROPERTIES:
+   :geometry: disk
+   :interaction: general
+   :typeInClass: private
+   :END:
+   [[file:interaction/dItr.cpp]]
+
+** dItr
+   :PROPERTIES:
+   :geometry: disk
+   :interaction: general
+   :typeInClass: private
+   :END:
+   [[file:interaction/dItr.cpp]]
+
+** tF
+   :PROPERTIES:
+   :geometry: torus
+   :interaction: general
+   :typeInClass: private
+   :END:
+   [[file:interaction/tItr.cpp]]
+   
+** tItr
+   :PROPERTIES:
+   :geometry: torus
+   :interaction: general
+   :typeInClass: private
+   :END:
+   [[file:interaction/tItr.cpp]]
+
+** itrGen
+   :PROPERTIES:
+   :geometry: general
+   :interaction: general
+   :typeInClass: public
+   :END:
+   [[file:interaction/publicFuncs.cpp]]
+
+** itrPrint
+   :PROPERTIES:
+   :geometry: general
+   :interaction: general
+   :typeInClass: public
+   :END:
+   [[file:interaction/publicFuncs.cpp]]
+   
+* matrix
+  :PROPERTIES:
+  :use:      matrix
+  :interaction: general
+  :END:
+  [[file:matrix/matrix.h]]
+  The matrix may be real(in disk) or complex(in torus) matrix. \\
+  If the class matrix is written as a class template, \\
+  the member functions and class declaration need to be in the same file. \\
+  That gives me a too large single file. \\
+  Therefore, instead of writing a class template, \\
+  I just define all the possible needed variable(real or complex) \\
+  in the class's declaration.
+** parameters:
+   sizeCountType = GO;
+   // G(geometry): (D)disk; (T)torus.
+   // O(option): (E)estimate the size of the matrix; \\
+   // (C)count the size of the matrix.
+
+** constructor
+  :PROPERTIES:
+  :geometry: general
+  :END:
+  [[file:matrix/publicFuncs.cpp]]
+
+** estimateSize
+  :PROPERTIES:
+  :geometry: general
+  :END:
+  [[file:matrix/countSize.cpp]]
+
+** estimateSize
+   :PROPERTIES:
+   :geometry: torus
+   :END:
+   [[file:matrix/countSize.cpp]]
+   omp parallel code
+
+** deciToPOB
+   :PROPERTIES:
+   :geometry: general
+   :END:
+   Transform a decimal number to the particle, anti-particle and orbital basis.
+   [[file:matrix/tool.cpp]]
+
+** diaME
+   :PROPERTIES:
+   :geometry: disk
+   :END:
+   [[file:matrix/diaME.cpp]]
+
+** dOffME
+   :PROPERTIES:
+   :geometry: disk
+   :END:
+   [[file:matrix/dME.cpp]]
+   
+** tOffME
+   :PROPERTIES:
+   :geometry: torus
+   :END:
+   [[file:matrix/tME.cpp]]
+
+** tLocateME
+   :PROPERTIES:
+   :geometry: torus
+   :END:
+   [[file:matrix/tMETool.cpp]]
+   This function change the deci to the one kept by torus' bases; \\
+   return the phase difference between the original deci state \\
+   and changed deci state.
+
+** binarySearch
+   :PROPERTIES:
+   :geometry: general
+   :END:
+   [[file:matrix/tool.cpp]]
+
+** sgnChange
+   :PROPERTIES:
+   :geometry: torus
+   :END:
+   [[file:matrix/tMETool.cpp]]
+   There are some factors need to be considered.
+
+** tScatteredValue
+   :PROPERTIES:
+   :geometry: torus
+   :END:
+   [[file:matrix/tMETool.cpp]]
+
+** tStoreValue
+   :PROPERTIES:
+   :geometry: torus
+   :END:
+   [[file:matrix/tMETool.cpp]]
+   Different sized estimated methods lead to different storing data structure.
+  
+** tNewJudge
+   :PROPERTIES:
+   :geometry: torus
+   :END:
+   [[file:matrix/tMETool.cpp]]
+   Need this when the customer try to exactly calculate the size of the matrix.
+  
+** mGen
+   :PROPERTIES:
+   :geometry: general
+   :END:
+   [[file:matrix/publicFuncs.cpp]]
+
+** print
+   :PROPERTIES:
+   :geometry: general
+   :END:
+   [[file:matrix/publicFuncs.cpp]]
+
+* remarks
+** orbital basis
+ex: basis[4] = {1, 0, 1, 0};
+
+** particle basis
+ex: basis[2] = {0, 2} = {1, 0, 1, 0}(orbital basis);
+
+** relation between decimal number and orbital basis
+ex: basis[4] = {1, 0, 1, 0} <=> decimal no. = 10;

@@ -1,0 +1,20 @@
+//#include "interaction.h"
+//#include <gsl/gsl_sf_laguerre.h>
+//#include <gsl/gsl_math.h> // const pi
+#include <iostream>
+
+// Fourier tranfromation of different interactions in disk
+double dFCoulomb(double k) {return /*2 * M_PI / k*/1;}
+/*
+double vmIntegrand(double k, void* params)
+{
+  using namespace std;
+  int n = *(int *) params, // means 0th Landau level
+    m = *((int *) params + 1);
+    double ln = gsl_sf_laguerre_n(n, 0, k*k/2),
+    lm = gsl_sf_laguerre_n(m, 0, k*k),
+    e = exp(-k * k);
+  return (1/(2*M_PI)) * k * ln * ln * lm * e * dFCoulomb(k);
+
+}
+*/

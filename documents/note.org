@@ -1,0 +1,23 @@
+* DONE Clean mobile hard disk
+* DONE Write function note for matrix class
+* DONE Clean  acounts
+* DONE Copy YED to HPC
+* DONE Copy other libraries to HPC and test
+** DONE Boost
+** DONE GSL
+* DONE Re-install arpack++ in HPC
+* DONE Write and interface
+** DONE Link arpack++ library in my laptop
+** DONE Revise the matrix
+*** DONE generate temporary space
+*** DONE revise tOffME
+*** DONE function to store the sequent MEs
+*** DONE the counting of offME has some problems, check it!!!
+*** TODO The solved energy is wrong, solve it: 
+    (refer to the old note to change the matrix form)
+   1. submit the matrix to hpc, and solve it
+** TODO Link arpack++ library in HPC 
+* DONE Check six particle results
+* DONE Run N6 and N8 and plot figure
+* TODO check N10, run a sample at s = 5, t = 5
+  
