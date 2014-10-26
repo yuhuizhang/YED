@@ -1,4 +1,4 @@
-**YED** is a library for numerical solving the physical problem of quantum Hall effect (QHE). It is designed to help researchers to save time in programming, and focus on the physics of fantastic quantum Hall effect. YED is a free software under GNU General Public License version 3.  
+**YED** is a library for numerically solving the physical problem of quantum Hall effect (QHE). It is designed to help researchers to save time in programming, and focus on the physics of fantastic quantum Hall effect. YED is a free software under GNU General Public License version 3.  
 
 **YED** is mainly written in C++. It uses the concepts of object-oriented programming (**OOP**) to treat the different physical processes of QHE as C++ classes. To be specific, the C++ classes defined in **YED** are:
 - basis: basis in the Fock space of the QHE problem;
