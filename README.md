@@ -11,4 +11,6 @@ At this point of time, **YED** can solve the QHE problems of finite size systems
 - disk;
 - torus (rectangular lattice with different aspect ratios).
 
+We are working on the sphere and cylinder geometries now.
+
 
